@@ -30,7 +30,8 @@ async function bootstrap() {
    const host = configService.get<System>(Env.SYSTEM).host
    const port = configService.get<System>(Env.SYSTEM).port
    const origin = configService.get<System>(Env.SYSTEM).origin
-   const graphqlPath = configService.get<System>(Env.SYSTEM).graphql_path
+   const nodeEnv = configService.get<System>(Env.SYSTEM).node_env
+   // const graphqlPath = configService.get<System>(Env.SYSTEM).graphql_path
 
    app.setGlobalPrefix('api', {
       exclude: [configService.get<System>(Env.SYSTEM).graphql_path],
@@ -58,7 +59,9 @@ async function bootstrap() {
          address: address(),
          message: `NestJS Server is running!`,
       }
-      logger.log(announcement, 'Main')
+      
+      if (nodeEnv !== 'production') logger.log(announcement, 'Main')
+      else console.log(announcement)
    })
 }
 
