@@ -6,6 +6,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+     "remote": "heroku git:remote -a be-atomlaptop",
+    "heroku-prebuild": "yarn install --prod=false",
     "deploy": "bash scripts/deploy.sh",
     "git": "bash scripts/git-push.sh",
     "open": "heroku open",
