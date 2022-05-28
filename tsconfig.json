@@ -1,0 +1,73 @@
+{
+  "compilerOptions": {
+   "alwaysStrict": true,
+   "incremental": true,
+   "skipLibCheck": true,
+   "strictNullChecks": false,
+   "noImplicitAny": false,
+   "moduleResolution": "Node",
+   "resolveJsonModule": true,
+   "strictBindCallApply": false,
+   "forceConsistentCasingInFileNames": true,
+   "noFallthroughCasesInSwitch": false,
+   "noImplicitReturns": true,
+   "noImplicitOverride": true,
+   "noImplicitThis": true,
+   "noEmitOnError": true,
+   "noErrorTruncation": true,
+   "isolatedModules": true,
+   "keyofStringsOnly": true,
+   "module": "CommonJS",
+   "declaration": true,
+   "removeComments": true,
+   "emitDecoratorMetadata": true,
+   "experimentalDecorators": true,
+   "esModuleInterop": true,
+   "allowSyntheticDefaultImports": true,
+   "allowJs": true,
+   "target": "ES2021",
+   "lib": ["ES2021", "ESNext.AsyncIterable"],
+   "sourceMap": true,
+   "outDir": "dist",
+   "baseUrl": ".",
+    "paths": {
+      "~": ["src"],
+      "~/*": ["src/*"],
+      "@libs/api-config": [
+        "libs/api-config/src"
+      ],
+      "@libs/api-config/*": [
+        "libs/api-config/src/*"
+      ],
+      "@libs/auth": [
+        "libs/auth/src"
+      ],
+      "@libs/auth/*": [
+        "libs/auth/src/*"
+      ],
+      "@libs/casl": [
+        "libs/casl/src"
+      ],
+      "@libs/casl/*": [
+        "libs/casl/src/*"
+      ],
+      "@libs/logger": [
+        "libs/logger/src"
+      ],
+      "@libs/logger/*": [
+        "libs/logger/src/*"
+      ],
+      "@libs/prisma": [
+        "libs/prisma/src"
+      ],
+      "@libs/prisma/*": [
+        "libs/prisma/src/*"
+      ]
+    }
+  },
+  "ts-node": {
+     "transpileOnly": true,
+     "require": ["tsconfig-paths/register"]
+  },
+  "exclude": ["scripts", "public", "dist"]
+}
