@@ -27,8 +27,9 @@ export const validationSchema = Joi.object().keys({
       .uri()
       .required(),
    GRAPHQL_PATH: Joi.string()
-      .required(),
+      .default('/graphql'),
    GRAPHQL_SCHEMA_PATH: Joi.string()
+      .default('src/graphql/schema.gql')
       .required(),
    DATABASE_URL: Joi.string()
       .uri()
@@ -36,7 +37,7 @@ export const validationSchema = Joi.object().keys({
    JWT_KEY: Joi.string()
       .required(),
    TOKEN_NAME: Joi.string()
-      .required(),
+      .default('Authorization'),
    AUTHOR: Joi.string()
       .default('user'),
    REDIS_SERVER_NAME: Joi.string()

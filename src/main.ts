@@ -3,25 +3,14 @@ import { LoggerService } from '@libs/logger'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
-// import { readFileSync } from 'fs-extra'
 // import { graphqlUploadExpress } from 'graphql-upload'
 import { address } from 'ip'
-// import { join } from 'path'
 import { AppModule } from '~/app.module'
 import { Env, NodeEnv, System } from '~/interface'
 
 async function bootstrap() {
-   // const httpsOptions: HttpsOptions | undefined =
-   //    process.env.NODE_ENV === NodeEnv.PRODUCTION
-   //       ? undefined
-   //       : {
-   //            cert: readFileSync(join(process.cwd(), 'src/ssl/cert.pem')),
-   //            key: readFileSync(join(process.cwd(), 'src/ssl/key.pem')),
-   //         }
-
    const app = await NestFactory.create(AppModule, {
       bufferLogs: true,
-      // httpsOptions,
    })
    const logger = app.get(LoggerService)
    app.useLogger(logger)
