@@ -13,8 +13,9 @@
     "open": "heroku open",
     "cmd": "heroku ps:exec",
     "log": "heroku logs -t",
-    "prebuild": "rimraf dist",
-    "build": "yarn migrate:reset && nest build",
+    "-prebuild": "rimraf dist",
+    "-build": "yarn migrate:reset && nest build",
+    "build": "echo \"Don't build app\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
@@ -144,6 +145,7 @@
   },
   "engines": {
     "node": "16.x",
+    "npm": "7.x",
     "yarn": "1.x"
   }
 }
