@@ -34,7 +34,7 @@ GqlOptionsFactory<ApolloDriverConfig>
       cors: {
          origin: config.system.origin,
          credentials: true,
-         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       },
       path: config.system.graphql_path,
       /**
