@@ -40,7 +40,8 @@ export class AuthResolver {
 
                res.cookie(tokenName, accessToken, {
                   httpOnly: true,
-                  sameSite: 'lax',
+                  sameSite: 'none',
+                  secure: true
                })
             } else {
                response.message = `username and password are not matched or "${username}" is not existed in database!`
@@ -72,7 +73,8 @@ export class AuthResolver {
 
       res.cookie(tokenName, '', {
          httpOnly: true,
-         sameSite: 'lax',
+         sameSite: 'none',
+         secure: true,
          maxAge: 0,
       })
 

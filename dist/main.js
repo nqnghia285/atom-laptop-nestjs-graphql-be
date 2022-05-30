@@ -846,7 +846,8 @@ let AuthResolver = AuthResolver_1 = class AuthResolver {
                 const tokenName = this.apiConfig.system.token_name;
                 res.cookie(tokenName, accessToken, {
                     httpOnly: true,
-                    sameSite: 'lax',
+                    sameSite: 'none',
+                    secure: true
                 });
             }
             else {
@@ -874,7 +875,8 @@ let AuthResolver = AuthResolver_1 = class AuthResolver {
         };
         res.cookie(tokenName, '', {
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'none',
+            secure: true,
             maxAge: 0,
         });
         if (this.apiConfig.system.node_env !== 'production') {
