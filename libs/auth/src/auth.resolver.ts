@@ -71,7 +71,7 @@ export class AuthResolver {
          errors: [],
       }
 
-      res.cookie(tokenName, '', {
+      res.cookie(tokenName, 'null', {
          httpOnly: true,
          sameSite: 'none',
          secure: true,

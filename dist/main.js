@@ -192,8 +192,8 @@ const graphql_1 = __webpack_require__(43);
 const serve_static_1 = __webpack_require__(269);
 const api_1 = __webpack_require__(270);
 const config_2 = __webpack_require__(276);
-const features_1 = __webpack_require__(296);
-const graphql_2 = __webpack_require__(302);
+const features_1 = __webpack_require__(298);
+const graphql_2 = __webpack_require__(304);
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -873,7 +873,7 @@ let AuthResolver = AuthResolver_1 = class AuthResolver {
             data: null,
             errors: [],
         };
-        res.cookie(tokenName, '', {
+        res.cookie(tokenName, 'null', {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
@@ -43873,8 +43873,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__webpack_require__(279), exports);
 __exportStar(__webpack_require__(284), exports);
-__exportStar(__webpack_require__(294), exports);
-__exportStar(__webpack_require__(295), exports);
+__exportStar(__webpack_require__(296), exports);
+__exportStar(__webpack_require__(297), exports);
 
 
 /***/ }),
@@ -44022,18 +44022,23 @@ module.exports = require("joi");
 
 /***/ }),
 /* 284 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.gqlModuleAsyncOptions = void 0;
 const api_config_1 = __webpack_require__(12);
 const apollo_1 = __webpack_require__(285);
-const apollo_server_core_1 = __webpack_require__(286);
+const apollo_server_cache_redis_1 = __webpack_require__(286);
+const apollo_server_core_1 = __webpack_require__(287);
+const ioredis_1 = __importDefault(__webpack_require__(288));
 const path_1 = __webpack_require__(10);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const interface_1 = __webpack_require__(15);
-const plugins_1 = __webpack_require__(292);
+const plugins_1 = __webpack_require__(294);
 exports.gqlModuleAsyncOptions = {
     driver: apollo_1.ApolloDriver,
     imports: [api_config_1.ApiConfigModule],
@@ -44055,6 +44060,15 @@ exports.gqlModuleAsyncOptions = {
         },
         path: config.system.graphql_path,
         formatResponse: handlers_1.formatResponse,
+        persistedQueries: {
+            cache: new apollo_server_cache_redis_1.BaseRedisCache({
+                client: new ioredis_1.default({
+                    host: config.system.redis_server_name,
+                    port: config.system.redis_server_port,
+                }),
+            }),
+            ttl: null,
+        },
         plugins: [
             config.system.node_env !== interface_1.NodeEnv.PRODUCTION
                 ? (0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()
@@ -44079,10 +44093,22 @@ module.exports = require("@nestjs/apollo");
 /* 286 */
 /***/ ((module) => {
 
-module.exports = require("apollo-server-core");
+module.exports = require("apollo-server-cache-redis");
 
 /***/ }),
 /* 287 */
+/***/ ((module) => {
+
+module.exports = require("apollo-server-core");
+
+/***/ }),
+/* 288 */
+/***/ ((module) => {
+
+module.exports = require("ioredis");
+
+/***/ }),
+/* 289 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44101,14 +44127,14 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(288), exports);
-__exportStar(__webpack_require__(289), exports);
 __exportStar(__webpack_require__(290), exports);
 __exportStar(__webpack_require__(291), exports);
+__exportStar(__webpack_require__(292), exports);
+__exportStar(__webpack_require__(293), exports);
 
 
 /***/ }),
-/* 288 */
+/* 290 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -44127,7 +44153,7 @@ exports.calculatePrice = calculatePrice;
 
 
 /***/ }),
-/* 289 */
+/* 291 */
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -44140,7 +44166,7 @@ exports.formatResponse = formatResponse;
 
 
 /***/ }),
-/* 290 */
+/* 292 */
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -44161,7 +44187,7 @@ exports.handleResolver = handleResolver;
 
 
 /***/ }),
-/* 291 */
+/* 293 */
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -44198,7 +44224,7 @@ exports.sumRating = sumRating;
 
 
 /***/ }),
-/* 292 */
+/* 294 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44217,11 +44243,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(293), exports);
+__exportStar(__webpack_require__(295), exports);
 
 
 /***/ }),
-/* 293 */
+/* 295 */
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -44246,7 +44272,7 @@ exports.HandleResolverParams = {
 
 
 /***/ }),
-/* 294 */
+/* 296 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -44271,7 +44297,7 @@ exports.serveStaticModuleOptions = {
 
 
 /***/ }),
-/* 295 */
+/* 297 */
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -44296,7 +44322,7 @@ exports.wsOptions = {
 
 
 /***/ }),
-/* 296 */
+/* 298 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44309,7 +44335,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FeaturesModule = void 0;
 const common_1 = __webpack_require__(3);
-const chat_1 = __webpack_require__(297);
+const chat_1 = __webpack_require__(299);
 let FeaturesModule = class FeaturesModule {
 };
 FeaturesModule = __decorate([
@@ -44322,7 +44348,7 @@ exports.FeaturesModule = FeaturesModule;
 
 
 /***/ }),
-/* 297 */
+/* 299 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44341,12 +44367,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(298), exports);
-__exportStar(__webpack_require__(301), exports);
+__exportStar(__webpack_require__(300), exports);
+__exportStar(__webpack_require__(303), exports);
 
 
 /***/ }),
-/* 298 */
+/* 300 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44367,8 +44393,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ChatGateway = void 0;
 const logger_1 = __webpack_require__(1);
 const common_1 = __webpack_require__(3);
-const websockets_1 = __webpack_require__(299);
-const socket_io_1 = __webpack_require__(300);
+const websockets_1 = __webpack_require__(301);
+const socket_io_1 = __webpack_require__(302);
 const config_1 = __webpack_require__(276);
 const decorators_1 = __webpack_require__(249);
 const guards_1 = __webpack_require__(253);
@@ -44543,19 +44569,19 @@ exports.ChatGateway = ChatGateway;
 
 
 /***/ }),
-/* 299 */
+/* 301 */
 /***/ ((module) => {
 
 module.exports = require("@nestjs/websockets");
 
 /***/ }),
-/* 300 */
+/* 302 */
 /***/ ((module) => {
 
 module.exports = require("socket.io");
 
 /***/ }),
-/* 301 */
+/* 303 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44569,7 +44595,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ChatModule = void 0;
 const logger_1 = __webpack_require__(1);
 const common_1 = __webpack_require__(3);
-const chat_gateway_1 = __webpack_require__(298);
+const chat_gateway_1 = __webpack_require__(300);
 let ChatModule = class ChatModule {
 };
 ChatModule = __decorate([
@@ -44583,7 +44609,7 @@ exports.ChatModule = ChatModule;
 
 
 /***/ }),
-/* 302 */
+/* 304 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44596,8 +44622,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.GraphQLModules = void 0;
 const common_1 = __webpack_require__(3);
-const features_1 = __webpack_require__(303);
-const models_1 = __webpack_require__(308);
+const features_1 = __webpack_require__(305);
+const models_1 = __webpack_require__(310);
 const typedefs_1 = __webpack_require__(44);
 let GraphQLModules = class GraphQLModules {
 };
@@ -44641,55 +44667,55 @@ exports.GraphQLModules = GraphQLModules;
 
 
 /***/ }),
-/* 303 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(304), exports);
-
-
-/***/ }),
-/* 304 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(305), exports);
-__exportStar(__webpack_require__(306), exports);
-__exportStar(__webpack_require__(307), exports);
-
-
-/***/ }),
 /* 305 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__webpack_require__(306), exports);
+
+
+/***/ }),
+/* 306 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__webpack_require__(307), exports);
+__exportStar(__webpack_require__(308), exports);
+__exportStar(__webpack_require__(309), exports);
+
+
+/***/ }),
+/* 307 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44705,8 +44731,8 @@ const api_config_1 = __webpack_require__(12);
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const schema_resolver_1 = __webpack_require__(306);
-const schema_service_1 = __webpack_require__(307);
+const schema_resolver_1 = __webpack_require__(308);
+const schema_service_1 = __webpack_require__(309);
 let SchemaModule = class SchemaModule {
 };
 SchemaModule = __decorate([
@@ -44720,7 +44746,7 @@ exports.SchemaModule = SchemaModule;
 
 
 /***/ }),
-/* 306 */
+/* 308 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44740,7 +44766,7 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const typedefs_1 = __webpack_require__(44);
 const guards_1 = __webpack_require__(253);
-const schema_service_1 = __webpack_require__(307);
+const schema_service_1 = __webpack_require__(309);
 let SchemaResolver = class SchemaResolver {
     constructor(schema) {
         this.schema = schema;
@@ -44764,7 +44790,7 @@ exports.SchemaResolver = SchemaResolver;
 
 
 /***/ }),
-/* 307 */
+/* 309 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44803,66 +44829,66 @@ exports.SchemaService = SchemaService;
 
 
 /***/ }),
-/* 308 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(309), exports);
-__exportStar(__webpack_require__(313), exports);
-__exportStar(__webpack_require__(317), exports);
-__exportStar(__webpack_require__(321), exports);
-__exportStar(__webpack_require__(325), exports);
-__exportStar(__webpack_require__(331), exports);
-__exportStar(__webpack_require__(335), exports);
-__exportStar(__webpack_require__(339), exports);
-__exportStar(__webpack_require__(343), exports);
-__exportStar(__webpack_require__(347), exports);
-__exportStar(__webpack_require__(352), exports);
-__exportStar(__webpack_require__(360), exports);
-
-
-/***/ }),
-/* 309 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(310), exports);
-__exportStar(__webpack_require__(311), exports);
-__exportStar(__webpack_require__(312), exports);
-
-
-/***/ }),
 /* 310 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__webpack_require__(311), exports);
+__exportStar(__webpack_require__(315), exports);
+__exportStar(__webpack_require__(319), exports);
+__exportStar(__webpack_require__(323), exports);
+__exportStar(__webpack_require__(327), exports);
+__exportStar(__webpack_require__(333), exports);
+__exportStar(__webpack_require__(337), exports);
+__exportStar(__webpack_require__(341), exports);
+__exportStar(__webpack_require__(345), exports);
+__exportStar(__webpack_require__(349), exports);
+__exportStar(__webpack_require__(354), exports);
+__exportStar(__webpack_require__(362), exports);
+
+
+/***/ }),
+/* 311 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__webpack_require__(312), exports);
+__exportStar(__webpack_require__(313), exports);
+__exportStar(__webpack_require__(314), exports);
+
+
+/***/ }),
+/* 312 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44877,8 +44903,8 @@ exports.CommentModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const comment_resolver_1 = __webpack_require__(311);
-const comment_service_1 = __webpack_require__(312);
+const comment_resolver_1 = __webpack_require__(313);
+const comment_service_1 = __webpack_require__(314);
 let CommentModule = class CommentModule {
 };
 CommentModule = __decorate([
@@ -44892,7 +44918,7 @@ exports.CommentModule = CommentModule;
 
 
 /***/ }),
-/* 311 */
+/* 313 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -44915,9 +44941,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const comment_service_1 = __webpack_require__(312);
+const comment_service_1 = __webpack_require__(314);
 let CommentResolver = class CommentResolver {
     constructor(comment) {
         this.comment = comment;
@@ -45061,7 +45087,7 @@ exports.CommentResolver = CommentResolver;
 
 
 /***/ }),
-/* 312 */
+/* 314 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45132,7 +45158,7 @@ exports.CommentService = CommentService;
 
 
 /***/ }),
-/* 313 */
+/* 315 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45151,13 +45177,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(314), exports);
-__exportStar(__webpack_require__(315), exports);
 __exportStar(__webpack_require__(316), exports);
+__exportStar(__webpack_require__(317), exports);
+__exportStar(__webpack_require__(318), exports);
 
 
 /***/ }),
-/* 314 */
+/* 316 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45172,8 +45198,8 @@ exports.CustomerModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const customer_resolver_1 = __webpack_require__(315);
-const customer_service_1 = __webpack_require__(316);
+const customer_resolver_1 = __webpack_require__(317);
+const customer_service_1 = __webpack_require__(318);
 let CustomerModule = class CustomerModule {
 };
 CustomerModule = __decorate([
@@ -45187,7 +45213,7 @@ exports.CustomerModule = CustomerModule;
 
 
 /***/ }),
-/* 315 */
+/* 317 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45210,9 +45236,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const customer_service_1 = __webpack_require__(316);
+const customer_service_1 = __webpack_require__(318);
 let CustomerResolver = class CustomerResolver {
     constructor(customer) {
         this.customer = customer;
@@ -45356,7 +45382,7 @@ exports.CustomerResolver = CustomerResolver;
 
 
 /***/ }),
-/* 316 */
+/* 318 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45427,7 +45453,7 @@ exports.CustomerService = CustomerService;
 
 
 /***/ }),
-/* 317 */
+/* 319 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45446,13 +45472,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(318), exports);
-__exportStar(__webpack_require__(319), exports);
 __exportStar(__webpack_require__(320), exports);
+__exportStar(__webpack_require__(321), exports);
+__exportStar(__webpack_require__(322), exports);
 
 
 /***/ }),
-/* 318 */
+/* 320 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45467,8 +45493,8 @@ exports.DiscountModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const discount_resolver_1 = __webpack_require__(319);
-const discount_service_1 = __webpack_require__(320);
+const discount_resolver_1 = __webpack_require__(321);
+const discount_service_1 = __webpack_require__(322);
 let DiscountModule = class DiscountModule {
 };
 DiscountModule = __decorate([
@@ -45482,7 +45508,7 @@ exports.DiscountModule = DiscountModule;
 
 
 /***/ }),
-/* 319 */
+/* 321 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45505,9 +45531,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const discount_service_1 = __webpack_require__(320);
+const discount_service_1 = __webpack_require__(322);
 let DiscountResolver = class DiscountResolver {
     constructor(discount) {
         this.discount = discount;
@@ -45651,7 +45677,7 @@ exports.DiscountResolver = DiscountResolver;
 
 
 /***/ }),
-/* 320 */
+/* 322 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45722,7 +45748,7 @@ exports.DiscountService = DiscountService;
 
 
 /***/ }),
-/* 321 */
+/* 323 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45741,13 +45767,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(322), exports);
-__exportStar(__webpack_require__(323), exports);
 __exportStar(__webpack_require__(324), exports);
+__exportStar(__webpack_require__(325), exports);
+__exportStar(__webpack_require__(326), exports);
 
 
 /***/ }),
-/* 322 */
+/* 324 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45762,8 +45788,8 @@ exports.ImageModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const image_resolver_1 = __webpack_require__(323);
-const image_service_1 = __webpack_require__(324);
+const image_resolver_1 = __webpack_require__(325);
+const image_service_1 = __webpack_require__(326);
 let ImageModule = class ImageModule {
 };
 ImageModule = __decorate([
@@ -45777,7 +45803,7 @@ exports.ImageModule = ImageModule;
 
 
 /***/ }),
-/* 323 */
+/* 325 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -45800,9 +45826,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const image_service_1 = __webpack_require__(324);
+const image_service_1 = __webpack_require__(326);
 let ImageResolver = class ImageResolver {
     constructor(image) {
         this.image = image;
@@ -45946,7 +45972,7 @@ exports.ImageResolver = ImageResolver;
 
 
 /***/ }),
-/* 324 */
+/* 326 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46017,7 +46043,7 @@ exports.ImageService = ImageService;
 
 
 /***/ }),
-/* 325 */
+/* 327 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46036,13 +46062,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(326), exports);
-__exportStar(__webpack_require__(327), exports);
 __exportStar(__webpack_require__(328), exports);
+__exportStar(__webpack_require__(329), exports);
+__exportStar(__webpack_require__(330), exports);
 
 
 /***/ }),
-/* 326 */
+/* 328 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46057,10 +46083,10 @@ exports.LaptopModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const laptop_resolver_1 = __webpack_require__(327);
-const laptop_service_1 = __webpack_require__(328);
-const price_field_resolver_1 = __webpack_require__(329);
-const rating_field_resolver_1 = __webpack_require__(330);
+const laptop_resolver_1 = __webpack_require__(329);
+const laptop_service_1 = __webpack_require__(330);
+const price_field_resolver_1 = __webpack_require__(331);
+const rating_field_resolver_1 = __webpack_require__(332);
 let LaptopModule = class LaptopModule {
 };
 LaptopModule = __decorate([
@@ -46079,7 +46105,7 @@ exports.LaptopModule = LaptopModule;
 
 
 /***/ }),
-/* 327 */
+/* 329 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46102,9 +46128,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const laptop_service_1 = __webpack_require__(328);
+const laptop_service_1 = __webpack_require__(330);
 let LaptopResolver = class LaptopResolver {
     constructor(laptop) {
         this.laptop = laptop;
@@ -46248,7 +46274,7 @@ exports.LaptopResolver = LaptopResolver;
 
 
 /***/ }),
-/* 328 */
+/* 330 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46318,7 +46344,7 @@ exports.LaptopService = LaptopService;
 
 
 /***/ }),
-/* 329 */
+/* 331 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46340,8 +46366,8 @@ exports.PriceFieldOfLaptopResolver = void 0;
 const graphql_1 = __webpack_require__(43);
 const prisma_graphql_type_decimal_1 = __webpack_require__(54);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
-const handlers_1 = __webpack_require__(287);
-const laptop_service_1 = __webpack_require__(328);
+const handlers_1 = __webpack_require__(289);
+const laptop_service_1 = __webpack_require__(330);
 let PriceFieldOfLaptopResolver = class PriceFieldOfLaptopResolver {
     constructor(laptop) {
         this.laptop = laptop;
@@ -46372,7 +46398,7 @@ exports.PriceFieldOfLaptopResolver = PriceFieldOfLaptopResolver;
 
 
 /***/ }),
-/* 330 */
+/* 332 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46394,8 +46420,8 @@ exports.RatingFieldOfLaptopResolver = void 0;
 const graphql_1 = __webpack_require__(43);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const typedefs_1 = __webpack_require__(44);
-const handlers_1 = __webpack_require__(287);
-const laptop_service_1 = __webpack_require__(328);
+const handlers_1 = __webpack_require__(289);
+const laptop_service_1 = __webpack_require__(330);
 let RatingFieldOfLaptopResolver = class RatingFieldOfLaptopResolver {
     constructor(laptop) {
         this.laptop = laptop;
@@ -46436,7 +46462,7 @@ exports.RatingFieldOfLaptopResolver = RatingFieldOfLaptopResolver;
 
 
 /***/ }),
-/* 331 */
+/* 333 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46455,13 +46481,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(332), exports);
-__exportStar(__webpack_require__(333), exports);
 __exportStar(__webpack_require__(334), exports);
+__exportStar(__webpack_require__(335), exports);
+__exportStar(__webpack_require__(336), exports);
 
 
 /***/ }),
-/* 332 */
+/* 334 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46476,8 +46502,8 @@ exports.PassageModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const passage_resolver_1 = __webpack_require__(333);
-const passage_service_1 = __webpack_require__(334);
+const passage_resolver_1 = __webpack_require__(335);
+const passage_service_1 = __webpack_require__(336);
 let PassageModule = class PassageModule {
 };
 PassageModule = __decorate([
@@ -46491,7 +46517,7 @@ exports.PassageModule = PassageModule;
 
 
 /***/ }),
-/* 333 */
+/* 335 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46514,9 +46540,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const passage_service_1 = __webpack_require__(334);
+const passage_service_1 = __webpack_require__(336);
 let PassageResolver = class PassageResolver {
     constructor(passage) {
         this.passage = passage;
@@ -46660,7 +46686,7 @@ exports.PassageResolver = PassageResolver;
 
 
 /***/ }),
-/* 334 */
+/* 336 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46731,7 +46757,7 @@ exports.PassageService = PassageService;
 
 
 /***/ }),
-/* 335 */
+/* 337 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46750,13 +46776,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(336), exports);
-__exportStar(__webpack_require__(337), exports);
 __exportStar(__webpack_require__(338), exports);
+__exportStar(__webpack_require__(339), exports);
+__exportStar(__webpack_require__(340), exports);
 
 
 /***/ }),
-/* 336 */
+/* 338 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46771,8 +46797,8 @@ exports.PersonModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const person_resolver_1 = __webpack_require__(337);
-const person_service_1 = __webpack_require__(338);
+const person_resolver_1 = __webpack_require__(339);
+const person_service_1 = __webpack_require__(340);
 let PersonModule = class PersonModule {
 };
 PersonModule = __decorate([
@@ -46786,7 +46812,7 @@ exports.PersonModule = PersonModule;
 
 
 /***/ }),
-/* 337 */
+/* 339 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -46809,9 +46835,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const person_service_1 = __webpack_require__(338);
+const person_service_1 = __webpack_require__(340);
 let PersonResolver = class PersonResolver {
     constructor(person) {
         this.person = person;
@@ -46955,7 +46981,7 @@ exports.PersonResolver = PersonResolver;
 
 
 /***/ }),
-/* 338 */
+/* 340 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47026,7 +47052,7 @@ exports.PersonService = PersonService;
 
 
 /***/ }),
-/* 339 */
+/* 341 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47045,13 +47071,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(340), exports);
-__exportStar(__webpack_require__(341), exports);
 __exportStar(__webpack_require__(342), exports);
+__exportStar(__webpack_require__(343), exports);
+__exportStar(__webpack_require__(344), exports);
 
 
 /***/ }),
-/* 340 */
+/* 342 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47066,8 +47092,8 @@ exports.PostModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const post_resolver_1 = __webpack_require__(341);
-const post_service_1 = __webpack_require__(342);
+const post_resolver_1 = __webpack_require__(343);
+const post_service_1 = __webpack_require__(344);
 let PostModule = class PostModule {
 };
 PostModule = __decorate([
@@ -47081,7 +47107,7 @@ exports.PostModule = PostModule;
 
 
 /***/ }),
-/* 341 */
+/* 343 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47104,9 +47130,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const post_service_1 = __webpack_require__(342);
+const post_service_1 = __webpack_require__(344);
 let PostResolver = class PostResolver {
     constructor(post) {
         this.post = post;
@@ -47250,7 +47276,7 @@ exports.PostResolver = PostResolver;
 
 
 /***/ }),
-/* 342 */
+/* 344 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47321,7 +47347,7 @@ exports.PostService = PostService;
 
 
 /***/ }),
-/* 343 */
+/* 345 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47340,13 +47366,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(344), exports);
-__exportStar(__webpack_require__(345), exports);
 __exportStar(__webpack_require__(346), exports);
+__exportStar(__webpack_require__(347), exports);
+__exportStar(__webpack_require__(348), exports);
 
 
 /***/ }),
-/* 344 */
+/* 346 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47361,8 +47387,8 @@ exports.PriceMapModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const price_map_resolver_1 = __webpack_require__(345);
-const price_map_service_1 = __webpack_require__(346);
+const price_map_resolver_1 = __webpack_require__(347);
+const price_map_service_1 = __webpack_require__(348);
 let PriceMapModule = class PriceMapModule {
 };
 PriceMapModule = __decorate([
@@ -47376,7 +47402,7 @@ exports.PriceMapModule = PriceMapModule;
 
 
 /***/ }),
-/* 345 */
+/* 347 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47399,9 +47425,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const price_map_service_1 = __webpack_require__(346);
+const price_map_service_1 = __webpack_require__(348);
 let PriceMapResolver = class PriceMapResolver {
     constructor(priceMap) {
         this.priceMap = priceMap;
@@ -47546,7 +47572,7 @@ exports.PriceMapResolver = PriceMapResolver;
 
 
 /***/ }),
-/* 346 */
+/* 348 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47617,7 +47643,7 @@ exports.PriceMapService = PriceMapService;
 
 
 /***/ }),
-/* 347 */
+/* 349 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47636,13 +47662,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(348), exports);
-__exportStar(__webpack_require__(349), exports);
 __exportStar(__webpack_require__(350), exports);
+__exportStar(__webpack_require__(351), exports);
+__exportStar(__webpack_require__(352), exports);
 
 
 /***/ }),
-/* 348 */
+/* 350 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47657,9 +47683,9 @@ exports.PurchaseModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const purchase_resolver_1 = __webpack_require__(349);
-const purchase_service_1 = __webpack_require__(350);
-const total_resolver_1 = __webpack_require__(351);
+const purchase_resolver_1 = __webpack_require__(351);
+const purchase_service_1 = __webpack_require__(352);
+const total_resolver_1 = __webpack_require__(353);
 let PurchaseModule = class PurchaseModule {
 };
 PurchaseModule = __decorate([
@@ -47673,7 +47699,7 @@ exports.PurchaseModule = PurchaseModule;
 
 
 /***/ }),
-/* 349 */
+/* 351 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47696,9 +47722,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const purchase_service_1 = __webpack_require__(350);
+const purchase_service_1 = __webpack_require__(352);
 let PurchaseResolver = class PurchaseResolver {
     constructor(purchase) {
         this.purchase = purchase;
@@ -47842,7 +47868,7 @@ exports.PurchaseResolver = PurchaseResolver;
 
 
 /***/ }),
-/* 350 */
+/* 352 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47912,7 +47938,7 @@ exports.PurchaseService = PurchaseService;
 
 
 /***/ }),
-/* 351 */
+/* 353 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47935,8 +47961,8 @@ const graphql_1 = __webpack_require__(43);
 const client_1 = __webpack_require__(36);
 const prisma_graphql_type_decimal_1 = __webpack_require__(54);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
-const handlers_1 = __webpack_require__(287);
-const purchase_service_1 = __webpack_require__(350);
+const handlers_1 = __webpack_require__(289);
+const purchase_service_1 = __webpack_require__(352);
 let TotalFieldOfLaptopResolver = class TotalFieldOfLaptopResolver {
     constructor(purchase) {
         this.purchase = purchase;
@@ -47968,7 +47994,7 @@ exports.TotalFieldOfLaptopResolver = TotalFieldOfLaptopResolver;
 
 
 /***/ }),
-/* 352 */
+/* 354 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -47987,13 +48013,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(353), exports);
-__exportStar(__webpack_require__(354), exports);
-__exportStar(__webpack_require__(359), exports);
+__exportStar(__webpack_require__(355), exports);
+__exportStar(__webpack_require__(356), exports);
+__exportStar(__webpack_require__(361), exports);
 
 
 /***/ }),
-/* 353 */
+/* 355 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48008,8 +48034,8 @@ exports.UserModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const user_resolver_1 = __webpack_require__(354);
-const user_service_1 = __webpack_require__(359);
+const user_resolver_1 = __webpack_require__(356);
+const user_service_1 = __webpack_require__(361);
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
@@ -48023,7 +48049,7 @@ exports.UserModule = UserModule;
 
 
 /***/ }),
-/* 354 */
+/* 356 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48046,10 +48072,10 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
-const pipes_1 = __webpack_require__(355);
+const handlers_1 = __webpack_require__(289);
+const pipes_1 = __webpack_require__(357);
 const typedefs_1 = __webpack_require__(44);
-const user_service_1 = __webpack_require__(359);
+const user_service_1 = __webpack_require__(361);
 let UserResolver = class UserResolver {
     constructor(user) {
         this.user = user;
@@ -48193,7 +48219,7 @@ exports.UserResolver = UserResolver;
 
 
 /***/ }),
-/* 355 */
+/* 357 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48212,35 +48238,35 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(356), exports);
-
-
-/***/ }),
-/* 356 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(357), exports);
 __exportStar(__webpack_require__(358), exports);
 
 
 /***/ }),
-/* 357 */
+/* 358 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__webpack_require__(359), exports);
+__exportStar(__webpack_require__(360), exports);
+
+
+/***/ }),
+/* 359 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48273,7 +48299,7 @@ exports.UserCreateArgsPipe = UserCreateArgsPipe;
 
 
 /***/ }),
-/* 358 */
+/* 360 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48308,7 +48334,7 @@ exports.UserCreateManyArgsPipe = UserCreateManyArgsPipe;
 
 
 /***/ }),
-/* 359 */
+/* 361 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48379,7 +48405,7 @@ exports.UserService = UserService;
 
 
 /***/ }),
-/* 360 */
+/* 362 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48398,13 +48424,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__webpack_require__(361), exports);
-__exportStar(__webpack_require__(362), exports);
 __exportStar(__webpack_require__(363), exports);
+__exportStar(__webpack_require__(364), exports);
+__exportStar(__webpack_require__(365), exports);
 
 
 /***/ }),
-/* 361 */
+/* 363 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48419,8 +48445,8 @@ exports.VideoModule = void 0;
 const casl_1 = __webpack_require__(244);
 const prisma_1 = __webpack_require__(33);
 const common_1 = __webpack_require__(3);
-const video_resolver_1 = __webpack_require__(362);
-const video_service_1 = __webpack_require__(363);
+const video_resolver_1 = __webpack_require__(364);
+const video_service_1 = __webpack_require__(365);
 let VideoModule = class VideoModule {
 };
 VideoModule = __decorate([
@@ -48434,7 +48460,7 @@ exports.VideoModule = VideoModule;
 
 
 /***/ }),
-/* 362 */
+/* 364 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -48457,9 +48483,9 @@ const graphql_1 = __webpack_require__(43);
 const decorators_1 = __webpack_require__(249);
 const prisma_nestjs_graphql_1 = __webpack_require__(49);
 const guards_1 = __webpack_require__(253);
-const handlers_1 = __webpack_require__(287);
+const handlers_1 = __webpack_require__(289);
 const typedefs_1 = __webpack_require__(44);
-const video_service_1 = __webpack_require__(363);
+const video_service_1 = __webpack_require__(365);
 let VideoResolver = class VideoResolver {
     constructor(video) {
         this.video = video;
@@ -48603,7 +48629,7 @@ exports.VideoResolver = VideoResolver;
 
 
 /***/ }),
-/* 363 */
+/* 365 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
