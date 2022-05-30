@@ -20,7 +20,7 @@ async function bootstrap() {
            }
 
    const app = await NestFactory.create(AppModule, {
-      bufferLogs: process.env.NODE_ENV !== 'production',
+      bufferLogs: true,
       httpsOptions,
    })
    const logger = app.get(LoggerService)
@@ -60,8 +60,7 @@ async function bootstrap() {
          message: `NestJS Server is running!`,
       }
 
-      if (nodeEnv !== 'production') logger.log(announcement, 'Main')
-      else console.log(announcement)
+      logger.log(announcement, 'Main')
    })
 }
 
