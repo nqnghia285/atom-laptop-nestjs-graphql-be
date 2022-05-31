@@ -3,7 +3,7 @@ import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.i
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
-import { readFileSync } from 'fs-extra'
+// import { readFileSync } from 'fs-extra'
 // import { graphqlUploadExpress } from 'graphql-upload'
 import { address } from 'ip'
 import { join } from 'path'
@@ -11,14 +11,14 @@ import { AppModule } from '~/app.module'
 import { Env, NodeEnv, System } from '~/interface'
 
 async function bootstrap() {
-   const httpsOptions: HttpsOptions = {
-      cert: readFileSync(join(process.cwd(), 'ssl/ssl.crt')),
-      key: readFileSync(join(process.cwd(), 'ssl/ssl.key'))
-   }
+   // const httpsOptions: HttpsOptions = {
+   //    cert: readFileSync(join(process.cwd(), 'ssl/ssl.crt')),
+   //    key: readFileSync(join(process.cwd(), 'ssl/ssl.key'))
+   // }
 
    const app = await NestFactory.create(AppModule, {
       bufferLogs: true,
-      httpsOptions
+      // httpsOptions
    })
 
    const logger = app.get(LoggerService)
