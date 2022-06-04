@@ -27,20 +27,6 @@ export class AuthResolver {
          errors: [],
       }
 
-      this.logger.log(req.body, `${AuthResolver.name}:body`)
-      this.logger.log(req.params, `${AuthResolver.name}:params`)
-      this.logger.log(req.query, `${AuthResolver.name}:query`)
-      this.logger.log(req.authInfo, `${AuthResolver.name}:authInfo`)
-      this.logger.log(req.baseUrl, `${AuthResolver.name}:baseUrl`)
-      this.logger.log(req.url, `${AuthResolver.name}:url`)
-      this.logger.log(req.cookies, `${AuthResolver.name}:cookies`)
-      this.logger.log(req.ip, `${AuthResolver.name}:ip`)
-      this.logger.log(req.hostname, `${AuthResolver.name}:hostname`)
-      this.logger.log(req.method, `${AuthResolver.name}:method`)
-      this.logger.log(req.protocol, `${AuthResolver.name}:protocol`)
-      this.logger.log(req.subdomains, `${AuthResolver.name}:subdomains`)
-      this.logger.log(req.secret, `${AuthResolver.name}:secret`)
-
       await this.auth
          .validateUser(username, password)
          .then((profile) => {
@@ -52,14 +38,15 @@ export class AuthResolver {
                const accessToken = this.auth.createJWT(profile)
                const tokenName = this.apiConfig.system.token_name
 
-               const expire = new Date()
-               expire.setMonth(expire.getMonth() + 1) // The cookie expire is one month.
+               // const expire = new Date()
+               // expire.setMonth(expire.getMonth() + 1) // The cookie expire is one month.
 
                res.cookie(tokenName, accessToken, {
                   httpOnly: true,
                   sameSite: 'none',
                   secure: true,
-                  expires: expire
+                  maxAge: 30 * 24 * 60 * 60, // The cookie expire is one month.
+                  domain: this.apiConfig.system.origin instanceof Array ? this.apiConfig.system.origin[0] : this.apiConfig.system.origin
                })
             } else {
                response.message = `username and password are not matched or "${username}" is not existed in database!`
@@ -94,6 +81,7 @@ export class AuthResolver {
          sameSite: 'none',
          secure: true,
          maxAge: 0,
+         domain: this.apiConfig.system.origin instanceof Array ? this.apiConfig.system.origin[0] : this.apiConfig.system.origin
       })
 
       if (this.apiConfig.system.node_env !== 'production') {
