@@ -56,6 +56,7 @@ export class AuthResolver {
                   httpOnly: true,
                   sameSite: 'none',
                   secure: true,
+                  maxAge: 30 * 24 * 60 * 60 // The cookie expire is one month.
                })
             } else {
                response.message = `username and password are not matched or "${username}" is not existed in database!`
