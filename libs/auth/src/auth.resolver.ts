@@ -52,11 +52,14 @@ export class AuthResolver {
                const accessToken = this.auth.createJWT(profile)
                const tokenName = this.apiConfig.system.token_name
 
+               const expire = new Date()
+               expire.setMonth(expire.getMonth() + 1) // The cookie expire is one month.
+
                res.cookie(tokenName, accessToken, {
                   httpOnly: true,
                   sameSite: 'none',
                   secure: true,
-                  maxAge: 30 * 24 * 60 * 60 // The cookie expire is one month.
+                  expires: expire
                })
             } else {
                response.message = `username and password are not matched or "${username}" is not existed in database!`
