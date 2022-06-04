@@ -19,10 +19,10 @@ async function bootstrap() {
    const host = configService.get<System>(Env.SYSTEM).host
    const port = configService.get<System>(Env.SYSTEM).port
    const origin = configService.get<System>(Env.SYSTEM).origin
-   // const graphqlPath = configService.get<System>(Env.SYSTEM).graphql_path
+   const graphqlPath = configService.get<System>(Env.SYSTEM).graphql_path
 
    app.setGlobalPrefix('api', {
-      exclude: [configService.get<System>(Env.SYSTEM).graphql_path],
+      exclude: [graphqlPath],
    })
 
    app.enableCors({

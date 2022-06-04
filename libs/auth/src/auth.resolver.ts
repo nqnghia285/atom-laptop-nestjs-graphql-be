@@ -27,6 +27,20 @@ export class AuthResolver {
          errors: [],
       }
 
+      this.logger.log(req.body, `${AuthResolver.name}:body`)
+      this.logger.log(req.params, `${AuthResolver.name}:params`)
+      this.logger.log(req.query, `${AuthResolver.name}:query`)
+      this.logger.log(req.authInfo, `${AuthResolver.name}:authInfo`)
+      this.logger.log(req.baseUrl, `${AuthResolver.name}:baseUrl`)
+      this.logger.log(req.url, `${AuthResolver.name}:url`)
+      this.logger.log(req.cookies, `${AuthResolver.name}:cookies`)
+      this.logger.log(req.ip, `${AuthResolver.name}:ip`)
+      this.logger.log(req.hostname, `${AuthResolver.name}:hostname`)
+      this.logger.log(req.method, `${AuthResolver.name}:method`)
+      this.logger.log(req.protocol, `${AuthResolver.name}:protocol`)
+      this.logger.log(req.subdomains, `${AuthResolver.name}:subdomains`)
+      this.logger.log(req.secret, `${AuthResolver.name}:secret`)
+
       await this.auth
          .validateUser(username, password)
          .then((profile) => {
