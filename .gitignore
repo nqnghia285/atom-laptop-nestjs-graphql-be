@@ -37,8 +37,9 @@ lerna-debug.log*
 # Local ignore something
 .env*
 # /src/prisma/data
-/public
+# /public
 /src/graphql/schema.gql
 /src/generated
-# /src/ssl
+/src/ssl
+/ssl
 /scripts/deploy.sh
