@@ -33,10 +33,12 @@ export class AuthResolver {
             if (profile) {
                response.isSuccess = true
                response.message = 'Successfully!'
-               response.data = profile
+               // response.data = profile
 
                const accessToken = this.auth.createJWT(profile)
                const tokenName = this.apiConfig.system.token_name
+
+               response.data = { profile, accessToken }
 
                // const expire = new Date()
                // expire.setMonth(expire.getMonth() + 1) // The cookie expire is one month.
