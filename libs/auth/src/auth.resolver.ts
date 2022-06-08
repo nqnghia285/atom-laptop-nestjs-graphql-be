@@ -45,9 +45,10 @@ export class AuthResolver {
 
                res.cookie(tokenName, accessToken, {
                   httpOnly: true,
-                  sameSite: 'none',
+                  sameSite: 'strict',
                   secure: true,
                   maxAge: 30 * 24 * 60 * 60, // The cookie expire is one month.
+                  path: '/',
                   domain: this.apiConfig.system.origin instanceof Array ? this.apiConfig.system.origin[0] : this.apiConfig.system.origin
                })
             } else {
@@ -80,9 +81,10 @@ export class AuthResolver {
 
       res.cookie(tokenName, 'null', {
          httpOnly: true,
-         sameSite: 'none',
+         sameSite: 'strict',
          secure: true,
          maxAge: 0,
+         path: '/',
          domain: this.apiConfig.system.origin instanceof Array ? this.apiConfig.system.origin[0] : this.apiConfig.system.origin
       })
 
