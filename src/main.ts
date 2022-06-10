@@ -25,6 +25,7 @@ async function bootstrap() {
       exclude: [graphqlPath],
    })
 
+   // Config cors for RESTful API
    app.enableCors({
       origin: origin,
       credentials: true,

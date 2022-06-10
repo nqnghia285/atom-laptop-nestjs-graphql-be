@@ -40,16 +40,12 @@ export class AuthResolver {
 
                response.data = { profile, accessToken }
 
-               // const expire = new Date()
-               // expire.setMonth(expire.getMonth() + 1) // The cookie expire is one month.
-
                res.cookie(tokenName, accessToken, {
                   httpOnly: true,
-                  sameSite: 'strict',
-                  secure: true,
+                  sameSite: 'lax',
+                  secure: this.apiConfig.system.node_env === 'production',
                   maxAge: 30 * 24 * 60 * 60, // The cookie expire is one month.
                   path: '/',
-                  domain: this.apiConfig.system.origin instanceof Array ? this.apiConfig.system.origin[0] : this.apiConfig.system.origin
                })
             } else {
                response.message = `username and password are not matched or "${username}" is not existed in database!`
@@ -81,11 +77,10 @@ export class AuthResolver {
 
       res.cookie(tokenName, 'null', {
          httpOnly: true,
-         sameSite: 'strict',
-         secure: true,
+         sameSite: 'lax',
+         secure: this.apiConfig.system.node_env === 'production',
          maxAge: 0,
          path: '/',
-         domain: this.apiConfig.system.origin instanceof Array ? this.apiConfig.system.origin[0] : this.apiConfig.system.origin
       })
 
       if (this.apiConfig.system.node_env !== 'production') {
