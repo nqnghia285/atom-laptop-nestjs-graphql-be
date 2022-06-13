@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 // import { graphqlUploadExpress } from 'graphql-upload'
 import { address } from 'ip'
 import { AppModule } from '~/app.module'
-import { Env, NodeEnv, System } from '~/interface'
+import { Env, System } from '~/interface'
 
 async function bootstrap() {
    const app = await NestFactory.create(AppModule, {

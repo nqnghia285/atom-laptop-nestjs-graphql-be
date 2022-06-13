@@ -11,4 +11,8 @@ export interface System {
    author: string
    redis_server_name: string
    redis_server_port: number
+   fullname: string
+   phone: string
+   email: string
+   password: string
 }

@@ -13,4 +13,8 @@ export const system = registerAs('system', () => ({
    author: process.env.AUTHOR,
    redis_server_name: process.env.REDIS_SERVER_NAME,
    redis_server_port: process.env.REDIS_SERVER_PORT,
+   fullname: process.env.fullname,
+   phone: process.env.phone,
+   email: process.env.email,
+   password: process.env.password,
 }))
