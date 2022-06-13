@@ -171,4 +171,6 @@ Descriptions about models, entities, relationships...[here](https://github.com/n
 
 ## Deployment
    I deployed this project on AWS. I ran it with developer environment. you can visit to
-   > https://api.codeeverywhere.online/graphql (temporary)
+   > Backend: https://api.codeeverywhere.online/graphql (temporary)
+
+   > Frontend: https://atomlaptop.vercel.app (Unfinished)
