@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
+import { graphqlUploadExpress as GraphqlUploadExpress } from 'graphql-upload'
 import { address } from 'ip'
 import { AppModule } from '~/app.module'
 import { Env, System } from '~/interface'
@@ -36,7 +37,7 @@ async function bootstrap() {
 
    app.use(
       graphqlPath,
-      graphqlUploadExpress({
+      (graphqlUploadExpress as typeof GraphqlUploadExpress)({
          maxFileSize: 1e7,
          maxFiles: 10,
       })

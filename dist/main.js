@@ -49789,7 +49789,7 @@ async function bootstrap() {
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     });
     app.use((0, cookie_parser_1.default)());
-    app.use(graphqlPath, (0, graphqlUploadExpress_js_1.default)({
+    app.use(graphqlPath, graphqlUploadExpress_js_1.default({
         maxFileSize: 1e7,
         maxFiles: 10,
     }));

@@ -7,9 +7,6 @@ import graphqlUploadKoa from './node_modules/graphql-upload/graphqlUploadKoa'
 import ignoreStream from './node_modules/graphql-upload/ignoreStream'
 import processRequest from './node_modules/graphql-upload/processRequest'
 
-
-
-
 export default {
    GRAPHQL_MULTIPART_REQUEST_SPEC_URL,
    GraphQLUpload,
