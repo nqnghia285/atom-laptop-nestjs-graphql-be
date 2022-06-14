@@ -1,5 +1,5 @@
 import { GraphQLRequestContext, GraphQLResponse } from 'apollo-server-types';
-import { Response } from '~/graphql/typedefs';
+// import { Response } from '~/graphql/typedefs';
 
 export function formatResponse(
    response: GraphQLResponse,

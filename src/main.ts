@@ -2,7 +2,7 @@ import { LoggerService } from '@libs/logger'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
-// import { graphqlUploadExpress } from 'graphql-upload'
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
 import { address } from 'ip'
 import { AppModule } from '~/app.module'
 import { Env, System } from '~/interface'
@@ -34,13 +34,13 @@ async function bootstrap() {
 
    app.use(cookieParser())
 
-   // app.use(
-   //    graphqlPath,
-   //    graphqlUploadExpress({
-   //       maxFileSize: 1e7,
-   //       maxFiles: 10,
-   //    })
-   // )
+   app.use(
+      graphqlPath,
+      graphqlUploadExpress({
+         maxFileSize: 1e7,
+         maxFiles: 10,
+      })
+   )
 
    await app.listen(port, host, async () => {
       const announcement = {
