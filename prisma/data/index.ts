@@ -3,7 +3,9 @@ import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
 export async function createTemplate() {
-   const prisma = new PrismaClient()
+   const prisma = new PrismaClient({
+      errorFormat: 'pretty'
+   })
 
    const logger = new Logger()
 

@@ -49762,6 +49762,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const logger_1 = __webpack_require__(/*! @libs/logger */ "./libs/logger/src/index.ts");
+const prisma_1 = __webpack_require__(/*! @libs/prisma */ "./libs/prisma/src/index.ts");
 const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
 const cookie_parser_1 = __importDefault(__webpack_require__(/*! cookie-parser */ "cookie-parser"));
@@ -49780,6 +49781,8 @@ async function bootstrap() {
     const port = configService.get(interface_1.Env.SYSTEM).port;
     const origin = configService.get(interface_1.Env.SYSTEM).origin;
     const graphqlPath = configService.get(interface_1.Env.SYSTEM).graphql_path;
+    const prismaService = app.get(prisma_1.PrismaService);
+    await prismaService.enableShutdownHooks(app);
     app.setGlobalPrefix('api', {
         exclude: [graphqlPath],
     });

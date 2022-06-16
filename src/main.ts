@@ -1,9 +1,10 @@
 import { LoggerService } from '@libs/logger'
+import { PrismaService } from '@libs/prisma'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
-import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
 import { graphqlUploadExpress as GraphqlUploadExpress } from 'graphql-upload'
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js'
 import { address } from 'ip'
 import { AppModule } from '~/app.module'
 import { Env, System } from '~/interface'
@@ -21,6 +22,9 @@ async function bootstrap() {
    const port = configService.get<System>(Env.SYSTEM).port
    const origin = configService.get<System>(Env.SYSTEM).origin
    const graphqlPath = configService.get<System>(Env.SYSTEM).graphql_path
+
+   const prismaService = app.get(PrismaService)
+   await prismaService.enableShutdownHooks(app)
 
    app.setGlobalPrefix('api', {
       exclude: [graphqlPath],
