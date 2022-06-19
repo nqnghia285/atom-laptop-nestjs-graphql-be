@@ -1,2 +1,1 @@
-yarn install --prod=false
-yarn add pm2
+echo prebuild
