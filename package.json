@@ -16,7 +16,7 @@
     "prebuild": "rimraf dist",
     "build": "bash scripts/build.sh",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "nest start",
+    "start": "bash scripts/start.sh",
     "dev": "nest start --watch",
     "dev-g": "yarn generate && nest start --watch",
     "debug": "nest start --debug --watch",
