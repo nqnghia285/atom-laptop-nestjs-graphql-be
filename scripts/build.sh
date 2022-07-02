@@ -1,1 +1,1 @@
-echo hello
+nest build

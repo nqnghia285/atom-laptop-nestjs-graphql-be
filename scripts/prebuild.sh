@@ -1,1 +1,1 @@
-echo prebuild
+rimraf dist
