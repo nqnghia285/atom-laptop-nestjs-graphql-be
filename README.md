@@ -103,7 +103,7 @@ Descriptions about models, entities, relationships...[here](https://github.com/n
       ```bash
       NODE_ENV=development
       AUTHOR=user
-      DATABASE_URL=your database url
+      DATABASE_URL=postgres://favrhesjmmkure:612f920a62311544d7841cc6f5f978df857df57ce9d859bee401daad8f269de1@ec2-34-231-177-125.compute-1.amazonaws.com:5432/dcnq80ke81obc8
       GRAPHQL_PATH=/graphql
       HOST=0.0.0.0
       PORT=5000
